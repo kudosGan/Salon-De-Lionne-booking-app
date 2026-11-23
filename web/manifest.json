@@ -1,0 +1,37 @@
+{
+    "id": "/",
+    "name": "Salon De Lionne",
+    "short_name": "Salon De Lionne",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#FAF5EC",
+    "theme_color": "#6B4A3A",
+    "description": "Book your appointment at Salon De Lionne, an exclusive hair salon in the east end of Toronto.",
+    "orientation": "any",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
