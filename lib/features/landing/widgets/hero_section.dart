@@ -48,7 +48,7 @@ class HeroSection extends StatelessWidget {
                       constraints: BoxConstraints(minHeight: box.maxHeight),
                       // Slightly below center so the content sits lower.
                       child: Align(
-                        alignment: const Alignment(0, 0.3),
+                        alignment: const Alignment(0, 0.1),
                         child: TweenAnimationBuilder<double>(
                       tween: Tween(begin: 0, end: 1),
                       duration: const Duration(milliseconds: 900),
@@ -62,10 +62,14 @@ class HeroSection extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
-                            width: 120,
-                            height: 120,
-                            decoration: BoxDecoration(
+                            width: 96,
+                            height: 96,
+                            decoration: const BoxDecoration(
                               color: AppColors.cream,
+                              shape: BoxShape.circle,
+                            ),
+                            // Drawn on top so the image can't cover the ring.
+                            foregroundDecoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border:
                                   Border.all(color: AppColors.softPink, width: 3),
