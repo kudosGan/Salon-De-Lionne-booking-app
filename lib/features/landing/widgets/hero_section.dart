@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../core/config/salon_assets.dart';
 import '../../../core/config/salon_config.dart';
 import '../../../core/theme/app_colors.dart';
@@ -21,8 +22,11 @@ class HeroSection extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        const SalonImage(SalonAssets.landingBackground,
-            alignment: Alignment(0, -0.4), label: 'Landing background image'),
+        const SalonImage(
+          SalonAssets.landingBackground,
+          alignment: Alignment(0, -0.4),
+          label: 'Landing background image',
+        ),
         const InstallAutoPrompt(), // offers "install the app" on phones
         // Dark warm overlay keeps text readable on any photo.
         DecoratedBox(
@@ -46,91 +50,131 @@ class HeroSection extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: ConstrainedBox(
                       constraints: BoxConstraints(minHeight: box.maxHeight),
-                      // Slightly below center so the content sits lower.
-                      child: Align(
-                        alignment: const Alignment(0, 0.1),
+                      // Logo pinned to the top, text pushed to the bottom, so the
+                      // middle of the photo (the face) stays clear.
+                      child: IntrinsicHeight(
                         child: TweenAnimationBuilder<double>(
-                      tween: Tween(begin: 0, end: 1),
-                      duration: const Duration(milliseconds: 900),
-                      curve: Curves.easeOutCubic,
-                      builder: (context, v, child) => Opacity(
-                        opacity: v,
-                        child: Transform.translate(
-                            offset: Offset(0, 24 * (1 - v)), child: child),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            width: 96,
-                            height: 96,
-                            decoration: const BoxDecoration(
-                              color: AppColors.cream,
-                              shape: BoxShape.circle,
+                          tween: Tween(begin: 0, end: 1),
+                          duration: const Duration(milliseconds: 900),
+                          curve: Curves.easeOutCubic,
+                          builder: (context, v, child) => Opacity(
+                            opacity: v,
+                            child: Transform.translate(
+                              offset: Offset(0, 24 * (1 - v)),
+                              child: child,
                             ),
-                            // Drawn on top so the image can't cover the ring.
-                            foregroundDecoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border:
-                                  Border.all(color: AppColors.softPink, width: 3),
-                            ),
-                            clipBehavior: Clip.antiAlias,
-                            child: const SalonImage(SalonAssets.logo,
-                                fit: BoxFit.contain, label: 'Logo'),
                           ),
-                          const SizedBox(height: 24),
-                          Text('Welcome to',
-                              style: t.titleMedium?.copyWith(
-                                  color: AppColors.softPink, letterSpacing: 3)),
-                          const SizedBox(height: 6),
-                          Text(SalonConfig.name,
-                              textAlign: TextAlign.center,
-                              style: t.displaySmall?.copyWith(
-                                  color: AppColors.white, fontSize: 42)),
-                          const SizedBox(height: 12),
-                          ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 640),
-                            child: Text(SalonConfig.tagline,
-                                textAlign: TextAlign.center,
-                                style: t.bodyLarge?.copyWith(
-                                    color: AppColors.cream, height: 1.5)),
-                          ),
-                          const SizedBox(height: 32),
-                          // Transparent button: just text and a white outline.
-                          OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: AppColors.white,
-                              backgroundColor: Colors.transparent,
-                              side: const BorderSide(
-                                  color: AppColors.white, width: 1.5),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 36, vertical: 16),
-                              textStyle: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w600),
-                            ),
-                            onPressed: () => context.go('/book'),
-                            child: const Text('Book Appointment'),
-                          ),
-                          const SizedBox(height: 22),
-                          // Contact info on the next line.
-                          Wrap(
-                            alignment: WrapAlignment.center,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            spacing: 6,
-                            runSpacing: 4,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              _ContactLink(SalonConfig.phone, ContactLauncher.text),
-                              const _Dot(),
-                              _ContactLink(
-                                  SalonConfig.websiteLabel, ContactLauncher.website),
-                              const _Dot(),
-                              _ContactLink(SalonConfig.instagramHandle,
-                                  ContactLauncher.instagram),
+                              const SizedBox(height: 12),
+                              Container(
+                                width: 96,
+                                height: 96,
+                                decoration: const BoxDecoration(
+                                  color: AppColors.cream,
+                                  shape: BoxShape.circle,
+                                ),
+                                // Drawn on top so the image can't cover the ring.
+                                foregroundDecoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: AppColors.softPink,
+                                    width: 3,
+                                  ),
+                                ),
+                                clipBehavior: Clip.antiAlias,
+                                child: const SalonImage(
+                                  SalonAssets.logo,
+                                  fit: BoxFit.contain,
+                                  label: 'Logo',
+                                ),
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Welcome to',
+                                    style: t.titleMedium?.copyWith(
+                                      color: AppColors.softPink,
+                                      letterSpacing: 3,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    SalonConfig.name,
+                                    textAlign: TextAlign.center,
+                                    style: t.displaySmall?.copyWith(
+                                      color: AppColors.white,
+                                      fontSize: 42,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      maxWidth: 640,
+                                    ),
+                                    child: Text(
+                                      SalonConfig.tagline,
+                                      textAlign: TextAlign.center,
+                                      style: t.bodyLarge?.copyWith(
+                                        color: AppColors.cream,
+                                        height: 1.5,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 32),
+                                  // Transparent button: just text and a white outline.
+                                  OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      foregroundColor: AppColors.white,
+                                      backgroundColor: Colors.transparent,
+                                      side: const BorderSide(
+                                        color: AppColors.white,
+                                        width: 1.5,
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 36,
+                                        vertical: 16,
+                                      ),
+                                      textStyle: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    onPressed: () => context.go('/book'),
+                                    child: const Text('Book Appointment'),
+                                  ),
+                                  const SizedBox(height: 22),
+                                  // Contact info on the next line.
+                                  Wrap(
+                                    alignment: WrapAlignment.center,
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    spacing: 6,
+                                    runSpacing: 4,
+                                    children: [
+                                      _ContactLink(
+                                        SalonConfig.phone,
+                                        ContactLauncher.text,
+                                      ),
+                                      const _Dot(),
+                                      _ContactLink(
+                                        SalonConfig.websiteLabel,
+                                        ContactLauncher.website,
+                                      ),
+                                      const _Dot(),
+                                      _ContactLink(
+                                        SalonConfig.instagramHandle,
+                                        ContactLauncher.instagram,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
                       ),
                     ),
                   ),
@@ -147,10 +191,13 @@ class HeroSection extends StatelessWidget {
                     const SizedBox(width: 4),
                     TextButton(
                       onPressed: () => context.go('/login'),
-                      child: Text('Staff login',
-                          style: TextStyle(
-                              color: AppColors.cream.withValues(alpha: .8),
-                              fontSize: 12)),
+                      child: Text(
+                        'Staff login',
+                        style: TextStyle(
+                          color: AppColors.cream.withValues(alpha: .8),
+                          fontSize: 12,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -176,9 +223,14 @@ class _ContactLink extends StatelessWidget {
       borderRadius: BorderRadius.circular(6),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-        child: Text(label,
-            style: const TextStyle(
-                color: AppColors.cream, fontSize: 14, letterSpacing: .3)),
+        child: Text(
+          label,
+          style: const TextStyle(
+            color: AppColors.cream,
+            fontSize: 14,
+            letterSpacing: .3,
+          ),
+        ),
       ),
     );
   }
@@ -188,6 +240,8 @@ class _Dot extends StatelessWidget {
   const _Dot();
 
   @override
-  Widget build(BuildContext context) => const Text('•',
-      style: TextStyle(color: AppColors.softPink, fontSize: 14));
+  Widget build(BuildContext context) => const Text(
+    '•',
+    style: TextStyle(color: AppColors.softPink, fontSize: 14),
+  );
 }
