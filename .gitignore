@@ -65,3 +65,6 @@ serviceAccount*.json
 .aider*
 .windsurf/
 .github/copilot-instructions.md
+
+# Editor settings
+.vscode/
