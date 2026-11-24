@@ -40,29 +40,16 @@ class HeroSection extends StatelessWidget {
         SafeArea(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8, top: 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const InstallButton(), // only on phones that can install
-                    const QrButton(), // small QR icon, opens the big code
-                    const SizedBox(width: 4),
-                    TextButton(
-                      onPressed: () => context.go('/login'),
-                      child: Text('Staff login',
-                          style: TextStyle(
-                              color: AppColors.cream.withValues(alpha: .8),
-                              fontSize: 12)),
-                    ),
-                  ],
-                ),
-              ),
               Expanded(
-                child: Center(
-                  child: SingleChildScrollView(
+                child: LayoutBuilder(
+                  builder: (context, box) => SingleChildScrollView(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: TweenAnimationBuilder<double>(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: box.maxHeight),
+                      // Slightly below center so the content sits lower.
+                      child: Align(
+                        alignment: const Alignment(0, 0.3),
+                        child: TweenAnimationBuilder<double>(
                       tween: Tween(begin: 0, end: 1),
                       duration: const Duration(milliseconds: 900),
                       curve: Curves.easeOutCubic,
@@ -140,7 +127,28 @@ class HeroSection extends StatelessWidget {
                         ],
                       ),
                     ),
+                      ),
+                    ),
                   ),
+                ),
+              ),
+              // Install / QR / Staff login sit just above the gallery thumbnails.
+              Padding(
+                padding: const EdgeInsets.only(right: 8, bottom: 4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const InstallButton(), // only on phones that can install
+                    const QrButton(), // small QR icon, opens the big code
+                    const SizedBox(width: 4),
+                    TextButton(
+                      onPressed: () => context.go('/login'),
+                      child: Text('Staff login',
+                          style: TextStyle(
+                              color: AppColors.cream.withValues(alpha: .8),
+                              fontSize: 12)),
+                    ),
+                  ],
                 ),
               ),
               const GalleryStrip(),
